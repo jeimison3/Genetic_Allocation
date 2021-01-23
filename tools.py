@@ -100,6 +100,8 @@ def relatorio(somo, entrada, descrições_de_horario=None, f=sys.stdout):
         print('\n', professoresinv[colunas], '(' + str(+len(colunas)) + ' aulas)' + ',', file=f)
         media = 0
         for coluna in colunas:
+            if not coluna in somo.genes:
+                continue
             linha = somo.genes.index(coluna)
             for linhas in horarioinv:
                 if linha in linhas:
@@ -109,7 +111,7 @@ def relatorio(somo, entrada, descrições_de_horario=None, f=sys.stdout):
                         detalhe = ' (' + str(descrições_de_horario[linha]) + ');'
                     print('', horarioinv[linhas] + detalhe,
                           ' Satisfação:  ' + str(entrada[0][linha][coluna] * 10) + '%', sep='\t', file=f)
-        media /= len(colunas)
+        media /= len(colunas) if len(colunas) > 0 else 1
         print('\n', '\t' * 4 + '[Satisfação média do indivíduo:\t{0:.1f}%]\n'.format(media * 10), end='', file=f)
         print('.' * 60, file=f)
     print('\n', file=f)
