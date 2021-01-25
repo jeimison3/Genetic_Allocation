@@ -4,12 +4,28 @@ from random import random
 from random import choice
 from datetime import datetime
 from collections import OrderedDict as dict
+import requests
 
 '''
 Created on 10/11/2012
 '''
-__author__ = '@arthurj'
+__author__ = '@arthurj e @jeimison3'
 
+
+def download(key, sheet):
+    """
+    Método que extrai CSV de Google Sheet e adapta para CSV lido pelo projeto
+    """
+    # https://docs.google.com/spreadsheets/d/{key}/gviz/tq?tqx=out:csv&sheet={sheet_name}
+    with requests.Session() as s:
+        arq = s.get(
+            "https://docs.google.com/spreadsheets/d/%s/gviz/tq?tqx=out:csv&sheet=%s" % (key, sheet)
+        )
+        decoded_content = arq.content.decode('utf-8').replace('"', '').replace(',', ';')
+        f = open("down.csv", "w")
+        f.write(decoded_content)
+        f.close()
+        return ler("down.csv")
 
 def should_raise(e):
     if e.args[0] in ('CRASH',):

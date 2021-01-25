@@ -8,7 +8,7 @@ from multiprocessing import freeze_support
 
 __author__ = '@arthurj'
 
-entrada_crua = tools.ler('caso_cea.csv')
+entrada_crua = tools.download("1W0J-KlqjmaIwP5z5eqTos9fqBgjfg9KGnl5AwePIxdk", "TFinal") #tools.ler('caso_fup.csv')
 entrada = tools.processar_entrada(entrada_crua)
 res = None
 somos = set()
@@ -43,6 +43,7 @@ def iterar(g, max_wait_4_new_fitness=16):
         if melhor_passado.count(g.somos[0].nota) >= max_wait_4_new_fitness:
             break
     return g
+
 
 
 if __name__ == '__main__':
